@@ -1,0 +1,48 @@
+﻿<controls:MetroWindow x:Class="FinTrack.Shell.Views.ShellWindow"
+                      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                      xmlns:local="clr-namespace:FinTrack.Shell"
+                      xmlns:regions="http://prismlibrary.com/"
+                      xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
+                      xmlns:constants="clr-namespace:Service.Global.Constants;assembly=Service.Global"
+                      xmlns:viewModels="clr-namespace:FinTrack.Shell.ViewModels"
+                      xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+                      mc:Ignorable="d"
+                      regions:ViewModelLocator.AutoWireViewModel="True"
+                      d:DataContext="{d:DesignInstance viewModels:ShellWindowViewModel, IsDesignTimeCreatable=True}"
+                      Title="{Binding WindowTitle}" Width="{Binding ExpectedScreenWidth}"
+                      Height="{Binding ExpectedScreenHeight}"
+                      WindowStartupLocation="CenterScreen">
+    <controls:MetroWindow.RightWindowCommands>
+        <controls:WindowCommands>
+            <ContentControl
+                regions:RegionManager.RegionName="{x:Static constants:ViewNames.RightWindowCommandsViewIconPanel}" />
+        </controls:WindowCommands>
+    </controls:MetroWindow.RightWindowCommands>
+    <controls:MetroWindow.LeftWindowCommands>
+        <controls:WindowCommands>
+            <ContentControl
+                regions:RegionManager.RegionName="{x:Static constants:ViewNames.LeftWindowCommandsViewIconPanel}" />
+        </controls:WindowCommands>
+    </controls:MetroWindow.LeftWindowCommands>
+    <controls:MetroWindow.Flyouts>
+        <controls:FlyoutsControl>
+            <controls:Flyout Header="{Binding FlyoutTitle}" Position="Right" Width="{Binding FlyoutWidth}"
+                             IsOpen="{Binding IsFlyoutOpen}" Opacity=".75">
+                <ContentControl regions:RegionManager.RegionName="{x:Static constants:ViewNames.SidePanelView}" />
+            </controls:Flyout>
+        </controls:FlyoutsControl>
+    </controls:MetroWindow.Flyouts>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height=".25*" MaxHeight="50" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <ContentControl regions:RegionManager.RegionName="{x:Static constants:ViewNames.HeaderView}" Grid.Row="0" />
+        <ContentControl regions:RegionManager.RegionName="{x:Static constants:ViewNames.CalendarView}" Grid.Row="1" />
+        <controls:ProgressRing IsActive="{Binding DoesShellNeedToShowLoadIcon}" Grid.Row="0" Grid.RowSpan="2"
+                               IsLarge="True" />
+    </Grid>
+</controls:MetroWindow>

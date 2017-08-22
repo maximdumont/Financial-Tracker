@@ -1,0 +1,145 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="clr-namespace:Ui.Shared"
+    xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+    xmlns:shared="clr-namespace:UI.Shared"
+    xmlns:converters="clr-namespace:Service.Global.Converters;assembly=Service.Global"
+    xmlns:models="clr-namespace:Service.Global.Models;assembly=Service.Global">
+    <converters:BooleanToColorConverter x:Key="BooleanToColorConverter" />
+    <Style TargetType="{x:Type TextBlock}" x:Key="HeaderTextBlockStyle">
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="HorizontalAlignment" Value="Center" />
+        <Setter Property="Margin" Value="3" />
+        <Setter Property="FontWeight" Value="Bold" />
+    </Style>
+    <Style TargetType="{x:Type Button}" x:Key="HeaderArrowButtonStyle">
+        <Setter Property="Margin" Value="2" />
+        <Setter Property="MaxWidth" Value="75" />
+        <Setter Property="Background" Value="Transparent" />
+    </Style>
+    <Style TargetType="{x:Type TextBlock}" x:Key="HeaderThumbsButtonStyle">
+        <Setter Property="Margin" Value="1 0 0 1" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+    </Style>
+    <Style TargetType="{x:Type local:IconButton}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type local:IconButton}">
+                    <Border Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition />
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+                            <iconPacks:PackIconOcticons
+                                Kind="{Binding IconKind, RelativeSource={RelativeSource TemplatedParent}}"
+                                VerticalAlignment="Center"
+                                Foreground="{Binding Foreground, RelativeSource={RelativeSource TemplatedParent}}"
+                                Grid.Column="0"
+                                HorizontalAlignment="Right"
+                                Margin="{Binding Margin, RelativeSource={RelativeSource TemplatedParent}}" />
+                            <TextBlock
+                                Text="{Binding TextBlockValue, RelativeSource={RelativeSource TemplatedParent}}"
+                                Grid.Column="1"
+                                HorizontalAlignment="Left" Style="{StaticResource HeaderThumbsButtonStyle}"
+                                Foreground="{Binding Foreground, RelativeSource={RelativeSource TemplatedParent}}" />
+                        </Grid>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style TargetType="{x:Type local:ArrowNavigationalBox}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type local:ArrowNavigationalBox}">
+                    <Border Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}">
+                        <Grid
+                            HorizontalAlignment="{Binding HorizontalAlignment, RelativeSource={RelativeSource TemplatedParent}}"
+                            Margin="{Binding Margin, RelativeSource={RelativeSource TemplatedParent}}">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Button Grid.Column="0" Content="{iconPacks:PackIconFontAwesome ArrowLeft}"
+                                    Style="{StaticResource HeaderArrowButtonStyle}"
+                                    HorizontalAlignment="Right"
+                                    Command="{Binding LeftButtonClickedCommand, RelativeSource={RelativeSource TemplatedParent}}" />
+                            <Button Grid.Column="1" Content="{iconPacks:PackIconFontAwesome SquareOutline}"
+                                    Style="{StaticResource HeaderArrowButtonStyle}"
+                                    HorizontalAlignment="Center"
+                                    Command="{Binding MiddleArrowButtonClickedCommand, RelativeSource={RelativeSource TemplatedParent}}" />
+                            <Button Grid.Column="2" Content="{iconPacks:PackIconFontAwesome ArrowRight}"
+                                    Style="{StaticResource HeaderArrowButtonStyle}"
+                                    HorizontalAlignment="Left"
+                                    Command="{Binding RightArrowButtonClickedCommand, RelativeSource={RelativeSource TemplatedParent}}" />
+                        </Grid>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style TargetType="{x:Type local:ImportantTextBlock}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type local:ImportantTextBlock}">
+                    <Border Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}">
+                        <TextBlock Text="{Binding Text, RelativeSource={RelativeSource TemplatedParent}}"
+                                   Style="{StaticResource HeaderTextBlockStyle}" />
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style TargetType="{x:Type local:ColumnedHeaderBar}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type local:ColumnedHeaderBar}">
+                    <Border Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}">
+                        <ListView
+                            ItemsSource="{Binding ItemsSource, RelativeSource={RelativeSource TemplatedParent}}">
+                            <ListView.Template>
+                                <ControlTemplate>
+                                    <UniformGrid IsItemsHost="True"
+                                                 Columns="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=local:ColumnedHeaderBar},Path=ColumnCount}"
+                                                 IsEnabled="False" Opacity="1" />
+                                </ControlTemplate>
+                            </ListView.Template>
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <Border Background="Black">
+                                        <TextBlock Text="{Binding}" HorizontalAlignment="Center" Height="20" />
+                                    </Border>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style TargetType="{x:Type shared:ConfirmOrCancelGrid}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type shared:ConfirmOrCancelGrid}">
+                    <Border Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}">
+                        <Grid Margin="{Binding GridMargin, RelativeSource={RelativeSource TemplatedParent}}"
+                              VerticalAlignment="{Binding GridVerticalAlignment, RelativeSource={RelativeSource TemplatedParent}}" />
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+</ResourceDictionary>

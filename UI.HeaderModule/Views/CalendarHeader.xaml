@@ -1,0 +1,31 @@
+﻿<UserControl x:Class="UI.HeaderModule.Views.CalendarHeader"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mvvm="http://prismlibrary.com/"
+             xmlns:viewModels="clr-namespace:UI.HeaderModule.ViewModels"
+             xmlns:shared="clr-namespace:Ui.Shared;assembly=Ui.Shared"
+             mc:Ignorable="d" mvvm:ViewModelLocator.AutoWireViewModel="True"
+             d:DataContext="{d:DesignInstance viewModels:CalendarHeaderViewModel, IsDesignTimeCreatable=True}"
+             d:DesignHeight="300" d:DesignWidth="300">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition />
+            <ColumnDefinition />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <shared:ImportantTextBlock Text="{Binding CurrentlySelectedDate,StringFormat='{}{0:y}'}" />
+        <shared:IconButton IconKind="Thumbsup" Margin="{Binding IconButtonMargin}" Foreground="{Binding ThumbsUpColor}"
+                           TextBlockValue="{Binding PostiveAmountForMonth,StringFormat='{}{0:C}'}" Grid.Column="1" />
+        <shared:IconButton IconKind="ThumbsDown" Margin="{Binding IconButtonMargin}"
+                           Foreground="{Binding ThumbsDownColor}"
+                           TextBlockValue="{Binding NegativeAmountForMonth,StringFormat='{}{0:C}'}" Grid.Column="2" />
+        <shared:ArrowNavigationalBox Grid.Column="3" LeftButtonClickedCommand="{Binding DecreaseMonthCommand}"
+                                     MiddleArrowButtonClickedCommand="{Binding ResetToCurrentMonthCommand}"
+                                     HorizontalAlignment="Right"
+                                     RightArrowButtonClickedCommand="{Binding IncreaseMonthCommand}"
+                                     Margin="{Binding ArrowBoxMargin}" />
+    </Grid>
+</UserControl>
