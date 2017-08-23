@@ -67,6 +67,7 @@
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
@@ -91,6 +92,8 @@
                     <Button Content="{iconPacks:PackIconOcticons X}" Grid.Column="1"
                             Command="{Binding AddNewPaymentItemCancelledCommand}" Foreground="Red" />
                 </Grid>
+                <TextBlock Text="{Binding ErrorMessage}" Foreground="Red" Grid.Row="4" Grid.ColumnSpan="2"
+                           FontWeight="Bold" FontSize="35" HorizontalAlignment="Center" Grid.Column="0" />
             </Grid>
         </Border>
         <controls:ProgressRing IsActive="{Binding SetLoadIconToActive}" Grid.Row="0" Grid.RowSpan="4"

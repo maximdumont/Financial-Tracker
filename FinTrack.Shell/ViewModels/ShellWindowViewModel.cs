@@ -1,7 +1,6 @@
 ﻿using System.Windows;
 using Prism.Events;
 using Prism.Mvvm;
-using Service.Global.Events;
 using Service.Global.Events.Controls;
 using Service.Global.Events.Shell;
 
@@ -15,6 +14,7 @@ namespace FinTrack.Shell.ViewModels
         private string _flyoutTitle;
         private double _flyoutWidth;
         private bool _isFlyoutOpen;
+        private double _sidePanelOpacity;
         private string _windowTitle;
 
         public ShellWindowViewModel(IEventAggregator eventAgreggator)
@@ -28,8 +28,15 @@ namespace FinTrack.Shell.ViewModels
 
             eventAgreggator.GetEvent<ToggleShellToLoadEvent>().Subscribe(OnToggleShellToLoadEventReceived);
             FlyoutWidth = 350;
+            SidePanelOpacity = 0.9;
             FlyoutTitle = string.Empty;
             DoesShellNeedToShowLoadIcon = true;
+        }
+
+        public double SidePanelOpacity
+        {
+            get => _sidePanelOpacity;
+            set => SetProperty(ref _sidePanelOpacity, value);
         }
 
         public double ExpectedScreenWidth

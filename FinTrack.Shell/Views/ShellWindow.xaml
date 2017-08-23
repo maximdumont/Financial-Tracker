@@ -30,7 +30,7 @@
     <controls:MetroWindow.Flyouts>
         <controls:FlyoutsControl>
             <controls:Flyout Header="{Binding FlyoutTitle}" Position="Right" Width="{Binding FlyoutWidth}"
-                             IsOpen="{Binding IsFlyoutOpen}" Opacity=".75">
+                             IsOpen="{Binding IsFlyoutOpen}" Opacity="{Binding SidePanelOpacity}">
                 <ContentControl regions:RegionManager.RegionName="{x:Static constants:ViewNames.SidePanelView}" />
             </controls:Flyout>
         </controls:FlyoutsControl>

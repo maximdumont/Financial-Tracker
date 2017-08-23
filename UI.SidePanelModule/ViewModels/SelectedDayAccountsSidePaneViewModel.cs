@@ -19,10 +19,10 @@ namespace UI.SidePanelModule.ViewModels
         private ICommand _addNewPaymentItemCommand;
         private double _computedBalance;
         private ICommand _deleteCurrentItemCommand;
+        private string _errorMessage;
         private IEnumerable<Payment> _negativePayments;
         private double _newPaymentAmount;
         private string _newPaymentName;
-        private IEnumerable<Payment> _positivePayments;
         private DateCollection _receivedDateCollection;
         private bool _setAddPaymentGridVisible;
         private bool _setLoadIconToActive;
@@ -108,6 +108,12 @@ namespace UI.SidePanelModule.ViewModels
             set => SetProperty(ref _setLoadIconToActive, value);
         }
 
+        public string ErrorMessage
+        {
+            get => _errorMessage;
+            set => SetProperty(ref _errorMessage, value);
+        }
+
         private void OnAddNewPaymentItemCancelledOrPaymentScreenResetCommandClicked(Payment obj)
         {
             NewPaymentName = string.Empty;
@@ -117,16 +123,26 @@ namespace UI.SidePanelModule.ViewModels
 
         private async void OnDeletePaymentButtonClicked(Payment obj)
         {
-            await _paymentRepository.RemovePaymentAsync(ReceivedDateCollection.Date, obj);
-            OnSetSidePanelOpenAndSendDateCollectionEventReceivedOrUpdated(ReceivedDateCollection);
+            var result = await _paymentRepository.RemovePaymentAsync(ReceivedDateCollection.Date, obj);
+            if (result)
+                OnSetSidePanelOpenAndSendDateCollectionEventReceivedOrUpdated(ReceivedDateCollection);
+            else
+                ErrorMessage = "There Was An Error Processing Request";
         }
 
         private async void OnAddNewPaymentItemCommandClicked()
         {
-            await _paymentRepository.AddPaymentAsync(ReceivedDateCollection.Date,
+            var result = await _paymentRepository.AddPaymentAsync(ReceivedDateCollection.Date,
                 new Payment(NewPaymentName, NewPaymentAmount));
-            OnSetSidePanelOpenAndSendDateCollectionEventReceivedOrUpdated(ReceivedDateCollection);
-            SetAddPaymentGridVisible = !SetAddPaymentGridVisible;
+            if (result)
+            {
+                OnSetSidePanelOpenAndSendDateCollectionEventReceivedOrUpdated(ReceivedDateCollection);
+                SetAddPaymentGridVisible = !SetAddPaymentGridVisible;
+            }
+            else
+            {
+                ErrorMessage = "There Was An Error Processing Request";
+            }
         }
 
         private void OnAddButtonClickedCommandClicked()

@@ -13,31 +13,53 @@
              d:DataContext="{d:DesignInstance viewModels:SettingsSidePaneViewModel, IsDesignTimeCreatable=True}"
              d:DesignHeight="300" d:DesignWidth="300">
     <StackPanel Orientation="Vertical">
-        <Grid Margin="5">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width=".25*" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
-            <TextBlock Text="Theme" HorizontalAlignment="Center" FontSize="20" Margin="0 0 5 0" />
-            <ComboBox ItemsSource="{Binding ThemeChoices}" SelectedItem="{Binding SelectedThemeChoice,Mode=TwoWay}"
-                      IsReadOnly="False" HorizontalContentAlignment="Center" FontSize="20" Grid.Column="1"
-                      Margin="5 0 5 0">
-                <i:Interaction.Triggers>
-                    <i:EventTrigger EventName="SelectionChanged">
-                        <mvvm:InvokeCommandAction Command="{Binding ChangeThemeCommand}"
-                                                  CommandParameter="{Binding SelectedThemeChoice}" />
-                    </i:EventTrigger>
-                </i:Interaction.Triggers>
-            </ComboBox>
-        </Grid>
-        <Grid Margin="5">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width=".25*" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
-            <TextBlock Text="Import" HorizontalAlignment="Center" FontSize="20" Margin="0 0 5 0" />
-            <Button Content="{iconPacks:PackIconMaterial FileImport}" HorizontalContentAlignment="Center" FontSize="20"
-                    Grid.Column="1" Margin="5 0 5 0" />
-        </Grid>
+        <GroupBox Header="Look And Feel">
+            <StackPanel Orientation="Vertical">
+                <Grid Margin="2">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width=".25*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Text="Theme" HorizontalAlignment="Center" FontSize="15" VerticalAlignment="Center"/>
+                    <ComboBox ItemsSource="{Binding ThemeChoices}" SelectedItem="{Binding SelectedThemeChoice,Mode=TwoWay}"
+                              IsReadOnly="False" HorizontalContentAlignment="Center" FontSize="20" Grid.Column="1">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="SelectionChanged">
+                                <mvvm:InvokeCommandAction Command="{Binding ChangeThemeCommand}"
+                                                          CommandParameter="{Binding SelectedThemeChoice}" />
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </ComboBox>
+                </Grid>
+                <Grid Margin="2">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width=".25*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Text="Currency" HorizontalAlignment="Center" FontSize="15" VerticalAlignment="Center"/>
+                    <ComboBox ItemsSource="{Binding ThemeChoices}" SelectedItem="{Binding SelectedThemeChoice,Mode=TwoWay}"
+                              IsReadOnly="False" HorizontalContentAlignment="Center" FontSize="20" Grid.Column="1">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="SelectionChanged">
+                                <mvvm:InvokeCommandAction Command="{Binding ChangeThemeCommand}"
+                                                          CommandParameter="{Binding SelectedThemeChoice}" />
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </ComboBox>
+                </Grid>
+            </StackPanel>
+        </GroupBox>
+        <GroupBox Header="File Imports">
+            <Grid Margin="5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width=".25*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <TextBlock Text="Import" HorizontalAlignment="Center" FontSize="20" Margin="0 0 5 0" />
+                <Button Content="{iconPacks:PackIconMaterial FileImport}" HorizontalContentAlignment="Center"
+                        FontSize="20"
+                        Grid.Column="1" Margin="5 0 5 0" />
+            </Grid>
+        </GroupBox>
     </StackPanel>
 </UserControl>
