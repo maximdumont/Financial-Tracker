@@ -142,10 +142,11 @@ namespace UI.SidePanelModule.ViewModels
 
             var paymentsForCalendarDay =
                 await _paymentRepository.GetPaymentsForDateTimeCollectionAsync(ReceivedDateCollection);
-            if (paymentsForCalendarDay == null) return;
+            SetLoadIconToActive = false;
+            if (paymentsForCalendarDay == null)
+                return;
             OrderedPayments = paymentsForCalendarDay.OrderBy(m => m.PaymentAmount);
             ComputedBalance = paymentsForCalendarDay.Sum(m => m.PaymentAmount);
-            SetLoadIconToActive = false;
         }
     }
 }

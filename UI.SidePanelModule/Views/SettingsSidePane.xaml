@@ -18,9 +18,10 @@
                 <ColumnDefinition Width=".25*" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
-            <TextBlock Text="Theme" HorizontalAlignment="Center" FontSize="20" Margin="0 0 5 0"/>
+            <TextBlock Text="Theme" HorizontalAlignment="Center" FontSize="20" Margin="0 0 5 0" />
             <ComboBox ItemsSource="{Binding ThemeChoices}" SelectedItem="{Binding SelectedThemeChoice,Mode=TwoWay}"
-                      IsReadOnly="False" HorizontalContentAlignment="Center" FontSize="20" Grid.Column="1" Margin="5 0 5 0">
+                      IsReadOnly="False" HorizontalContentAlignment="Center" FontSize="20" Grid.Column="1"
+                      Margin="5 0 5 0">
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="SelectionChanged">
                         <mvvm:InvokeCommandAction Command="{Binding ChangeThemeCommand}"
@@ -34,8 +35,9 @@
                 <ColumnDefinition Width=".25*" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
-            <TextBlock Text="Import" HorizontalAlignment="Center" FontSize="20" Margin="0 0 5 0"/>
-            <Button Content="{iconPacks:PackIconMaterial FileImport}" HorizontalContentAlignment="Center" FontSize="20" Grid.Column="1" Margin="5 0 5 0"/>
+            <TextBlock Text="Import" HorizontalAlignment="Center" FontSize="20" Margin="0 0 5 0" />
+            <Button Content="{iconPacks:PackIconMaterial FileImport}" HorizontalContentAlignment="Center" FontSize="20"
+                    Grid.Column="1" Margin="5 0 5 0" />
         </Grid>
     </StackPanel>
 </UserControl>
