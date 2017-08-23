@@ -28,21 +28,5 @@ namespace Service.Data.Models.Models
 
         [NotMapped]
         public bool IsCollectionPositive { get; set; }
-        //            ? Payments.Sum(m => m.PaymentAmount).ToString("C")
-        //        return Payments != null && Payments.Any()
-        //    {
-        //    get
-        //{
-        //public string PaymentsSummary
-        //[NotMapped]
-        //            : string.Empty;
-        //    }
-        //}
-
-        //[NotMapped]
-        //public double TotalBalanceForCollection => Payments?.Sum(m => m.PaymentAmount) ?? 0;
-
-        //[NotMapped]
-        //public bool IsCollectionPositive => TotalBalanceForCollection >= 0;
     }
 }

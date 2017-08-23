@@ -7,6 +7,7 @@ using Prism.Mvvm;
 using Service.Data.Models.Models;
 using Service.Data.Repositories.PaymentRepository;
 using Service.Global.Events;
+using Service.Global.Events.Controls;
 using UI.SidePanelModule.ViewModels.BaseTypes;
 
 namespace UI.SidePanelModule.ViewModels

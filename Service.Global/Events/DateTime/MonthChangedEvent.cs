@@ -1,7 +1,6 @@
-﻿using System;
-using Prism.Events;
+﻿using Prism.Events;
 
-namespace Service.Global.Events
+namespace Service.Global.Events.DateTime
 {
     public class MonthChangedEvent : PubSubEvent<int>
     {

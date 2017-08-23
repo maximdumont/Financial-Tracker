@@ -89,14 +89,15 @@
     <Compile Include="Converters\BooleanToColorConverter.cs" />
     <Compile Include="Converters\NumberToColorConverter.cs" />
     <Compile Include="Dates\DataTimeShiftPadding.cs" />
-    <Compile Include="Events\AddNewPaymentEvent.cs" />
-    <Compile Include="Events\GenericPayloadEvent.cs" />
-    <Compile Include="Events\MonthChangedEvent.cs" />
-    <Compile Include="Events\SetFlyoutControlEvent.cs" />
-    <Compile Include="Events\SetTitleForFlyoutAndOpenEvent.cs" />
-    <Compile Include="Events\SetCurrentMonthEvent.cs" />
-    <Compile Include="Events\SetWindowTitleEvent.cs" />
-    <Compile Include="Events\ToggleShellToLoadEvent.cs" />
+    <Compile Include="Events\Controls\SetSidePanelOpenAndSendDateCollectionEvent.cs" />
+    <Compile Include="Events\Data\DataCollectionChangedEvent.cs" />
+    <Compile Include="Events\Shell\GenericPayloadEvent.cs" />
+    <Compile Include="Events\DateTime\MonthChangedEvent.cs" />
+    <Compile Include="Events\Controls\SetFlyoutControlEvent.cs" />
+    <Compile Include="Events\Controls\SetTitleForFlyoutAndOpenEvent.cs" />
+    <Compile Include="Events\DateTime\SetCurrentMonthEvent.cs" />
+    <Compile Include="Events\Shell\SetWindowTitleEvent.cs" />
+    <Compile Include="Events\Shell\ToggleShellToLoadEvent.cs" />
     <Compile Include="Extensions\ObjectExtensions.cs" />
     <Compile Include="GlobalModule.cs" />
     <Compile Include="Interceptors\Logging\ILogginInterceptor.cs" />
@@ -137,6 +138,12 @@
   <ItemGroup>
     <Folder Include="Adapters\" />
     <Folder Include="Exceptions\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Service.Data.Models\Service.Data.Models.csproj">
+      <Project>{C18514A6-96E9-42F6-A7AA-9F6F34E98C58}</Project>
+      <Name>Service.Data.Models</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

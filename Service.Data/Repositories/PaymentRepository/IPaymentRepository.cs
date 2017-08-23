@@ -12,7 +12,5 @@ namespace Service.Data.Repositories.PaymentRepository
         Task<DateCollection> GetPaymentsForDateTimeAsync(DateTime dateTime);
         Task<List<Payment>> GetPaymentsForDateTimeCollectionAsync(DateCollection collection);
         Task<IEnumerable<DateCollection>> GetPaymentDateCollectionsForMonthAsync(DateTime dateTime);
-
-        void Subscribe(Action<IEnumerable<DateCollection>> onCollectionChangedAction);
     }
 }

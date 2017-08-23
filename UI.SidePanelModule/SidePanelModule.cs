@@ -11,6 +11,7 @@ using Prism.Regions;
 using Prism.Unity;
 using Service.Global.Constants;
 using Service.Global.Events;
+using Service.Global.Events.Controls;
 using Service.Global.Unity;
 using UI.SidePanelModule.LocalViewNames;
 using UI.SidePanelModule.Views;

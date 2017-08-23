@@ -1,52 +1,81 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.Entity.Core;
 using System.Data.Entity.Migrations;
 using System.Linq;
 using System.Threading.Tasks;
+using Prism.Events;
+using Prism.Logging;
 using Service.Data.Contexts;
 using Service.Data.Models.Models;
+using Service.Global.Events.Data;
 using Service.Global.Extensions;
+using Service.Global.Logging;
 
 namespace Service.Data.Repositories.PaymentRepository
 {
-    public class PaymentRepository : BaseRepository<Payment>, IPaymentRepository
+    public class PaymentRepository : IPaymentRepository
     {
-        private readonly IList<Action<IEnumerable<DateCollection>>> _subscribers =
-            new List<Action<IEnumerable<DateCollection>>>();
+        private readonly DataCollectionChangedEvent _collectionChangedEvent;
+        private readonly IFinancialTrackerLogger _financialTrackerLogger;
+        private DateTime _lastLoggedDateCollectionDate;
 
-        public PaymentRepository() : base(new DbFinContext())
+        public PaymentRepository(IEventAggregator eventAggregator, IFinancialTrackerLogger logger)
         {
+            _financialTrackerLogger = logger;
+            _collectionChangedEvent = eventAggregator.GetEvent<DataCollectionChangedEvent>();
         }
 
         public async Task<bool> AddPaymentAsync(DateTime date, Payment payment)
         {
+            var isSuccess = true;
             using (var context = new DbFinContext())
             {
-                var dateRecord = await context.Dates.FirstOrDefaultAsync(m => m.Date == date) ??
-                                 new DateCollection(date);
+                try
+                {
+                    var dateRecord = context.Dates.FirstOrDefault(m => m.Date == date) ??
+                                     new DateCollection(date);
 
-                if (dateRecord.Payments.IsNull())
-                    dateRecord.Payments = new List<Payment>();
+                    if (dateRecord.Payments.IsNull())
+                        dateRecord.Payments = new List<Payment>();
 
-                dateRecord.Payments.Add(payment);
-
-                context.Dates.AddOrUpdate(dateRecord);
-                return context.SaveChanges() == 0;
+                    dateRecord.Payments.Add(payment);
+                    _lastLoggedDateCollectionDate = dateRecord.Date;
+                    context.Dates.AddOrUpdate(dateRecord);
+                    await context.SaveChangesAsync().ContinueWith(PublishUpdatedCollection);
+                }
+                catch (EntityException exception)
+                {
+                    isSuccess = false;
+                    _financialTrackerLogger.Log(exception.Message, Category.Exception, Priority.High);
+                }
+                return isSuccess;
             }
         }
 
         public async Task<bool> RemovePaymentAsync(DateTime date, Payment payment)
         {
+            var isSuccess = true;
             using (var context = new DbFinContext())
             {
-                var recordExists = await context.Dates.FirstOrDefaultAsync(m => m.Date == date);
-                var recordedPayment = recordExists?.Payments.FirstOrDefault(m => m.PaymentId == payment.PaymentId);
+                try
+                {
+                    var recordExists = await context.Dates.FirstOrDefaultAsync(m => m.Date == date);
+                    var recordedPayment = recordExists?.Payments.FirstOrDefault(m => m.PaymentId == payment.PaymentId);
 
-                if (recordedPayment != null)
-                    recordExists?.Payments.Remove(recordedPayment);
+                    if (recordedPayment != null)
+                        recordExists?.Payments.Remove(recordedPayment);
 
-                return context.SaveChanges() == 0;
+                    _lastLoggedDateCollectionDate = recordExists?.Date ?? DateTime.Now;
+                    await context.SaveChangesAsync().ContinueWith(PublishUpdatedCollection);
+                }
+                catch (EntityException exception)
+                {
+                    isSuccess = false;
+                    _financialTrackerLogger.Log(exception.Message, Category.Exception, Priority.High);
+                }
+                return isSuccess;
             }
         }
 
@@ -81,11 +110,7 @@ namespace Service.Data.Repositories.PaymentRepository
             }
         }
 
-        public void Subscribe(Action<IEnumerable<DateCollection>> onCollectionChangedAction)
-        {
-            InternalSubscribe(onCollectionChangedAction);
-        }
-        
+
         public Task<DateCollection> GetPaymentsForDateTimeAsync(DateTime dateTime)
         {
             return Task.Factory.StartNew(delegate
@@ -110,11 +135,13 @@ namespace Service.Data.Repositories.PaymentRepository
                 }
             });
         }
-        
-        private void InternalSubscribe(Action<IEnumerable<DateCollection>> onCollectionChangedAction)
+
+        private async void PublishUpdatedCollection(Task task)
         {
-            if (!_subscribers.Contains(onCollectionChangedAction))
-                _subscribers.Add(onCollectionChangedAction);
+            if (task.Status != TaskStatus.RanToCompletion) return;
+
+            var collection = await GetPaymentDateCollectionsForMonthAsync(_lastLoggedDateCollectionDate);
+            _collectionChangedEvent.Publish(collection);
         }
     }
 }

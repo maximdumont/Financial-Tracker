@@ -2,6 +2,8 @@
 using Prism.Events;
 using Prism.Mvvm;
 using Service.Global.Events;
+using Service.Global.Events.Controls;
+using Service.Global.Events.Shell;
 
 namespace FinTrack.Shell.ViewModels
 {

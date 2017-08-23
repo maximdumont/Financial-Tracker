@@ -7,6 +7,7 @@ using Prism.Commands;
 using Prism.Events;
 using Prism.Mvvm;
 using Service.Global.Events;
+using Service.Global.Events.DateTime;
 using UI.HeaderModule.ViewModels.BaseTypes;
 
 namespace UI.HeaderModule.ViewModels

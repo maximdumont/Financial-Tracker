@@ -3,6 +3,7 @@ using Prism.Commands;
 using Prism.Events;
 using Prism.Mvvm;
 using Service.Global.Events;
+using Service.Global.Events.Controls;
 using UI.WindowCommandsModule.ViewModels.BaseTypes;
 
 namespace UI.WindowCommandsModule.ViewModels

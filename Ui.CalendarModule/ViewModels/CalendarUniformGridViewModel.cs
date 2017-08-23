@@ -10,7 +10,10 @@ using Service.Data.Models.Models;
 using Service.Data.Repositories.DayOfWeekRepository;
 using Service.Data.Repositories.PaymentRepository;
 using Service.Global.Dates;
-using Service.Global.Events;
+using Service.Global.Events.Controls;
+using Service.Global.Events.Data;
+using Service.Global.Events.DateTime;
+using Service.Global.Events.Shell;
 using UI.CalendarModule.ViewModels.BaseTypes;
 
 namespace UI.CalendarModule.ViewModels
@@ -31,7 +34,7 @@ namespace UI.CalendarModule.ViewModels
             _paymentRepository = paymentRepository;
             _eventAggregator = eventAggregator;
 
-            _paymentRepository.Subscribe(OnCollectionChangedAction);
+            eventAggregator.GetEvent<DataCollectionChangedEvent>().Subscribe(OnDateCollectionChangedEventReceived);
             eventAggregator.GetEvent<MonthChangedEvent>().Subscribe(OnMonthChangedEventPublished);
             eventAggregator.GetEvent<SetCurrentMonthEvent>().Subscribe(OnCurrentMonthSetEventPublished);
 
@@ -77,7 +80,7 @@ namespace UI.CalendarModule.ViewModels
 
         public int DaysInWeekCount { get; }
 
-        private void OnCollectionChangedAction(IEnumerable<DateCollection> dateCollections)
+        private void OnDateCollectionChangedEventReceived(IEnumerable<DateCollection> obj)
         {
         }
 
