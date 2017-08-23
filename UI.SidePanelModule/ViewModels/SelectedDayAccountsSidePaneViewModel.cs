@@ -6,7 +6,6 @@ using Prism.Events;
 using Prism.Mvvm;
 using Service.Data.Models.Models;
 using Service.Data.Repositories.PaymentRepository;
-using Service.Global.Events;
 using Service.Global.Events.Controls;
 using UI.SidePanelModule.ViewModels.BaseTypes;
 
@@ -139,8 +138,7 @@ namespace UI.SidePanelModule.ViewModels
             DateCollection receivedDateCollection)
         {
             SetLoadIconToActive = true;
-            if (ReceivedDateCollection == null || !ReceivedDateCollection.Equals(receivedDateCollection))
-                ReceivedDateCollection = receivedDateCollection;
+            ReceivedDateCollection = receivedDateCollection;
 
             var paymentsForCalendarDay =
                 await _paymentRepository.GetPaymentsForDateTimeCollectionAsync(ReceivedDateCollection);

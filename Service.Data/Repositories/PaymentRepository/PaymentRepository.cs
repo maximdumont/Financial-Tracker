@@ -138,7 +138,8 @@ namespace Service.Data.Repositories.PaymentRepository
 
         private async void PublishUpdatedCollection(Task task)
         {
-            if (task.Status != TaskStatus.RanToCompletion) return;
+            if (task.Status == TaskStatus.Faulted || task.Status != TaskStatus.RanToCompletion)
+                _financialTrackerLogger.Log(task.Status.ToString(), Category.Exception, Priority.High);
 
             var collection = await GetPaymentDateCollectionsForMonthAsync(_lastLoggedDateCollectionDate);
             _collectionChangedEvent.Publish(collection);

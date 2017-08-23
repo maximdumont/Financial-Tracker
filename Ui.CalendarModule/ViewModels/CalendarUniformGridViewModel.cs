@@ -23,9 +23,11 @@ namespace UI.CalendarModule.ViewModels
         private readonly IEventAggregator _eventAggregator;
         private readonly IPaymentRepository _paymentRepository;
         private DateTime _currentlySelectedDate = DateTime.Now;
-        private ObservableCollection<DateCollection> _dayBoxes;
+        private IEnumerable<DateCollection> _dayBoxes;
         private ICommand _onGridItemSelectedCommand;
         private int _padding;
+
+        private DateCollection _previouslySelectedDateCollection;
         private DateCollection _selectedDateCollection;
 
         public CalendarUniformGridViewModel(IEventAggregator eventAggregator, IPaymentRepository paymentRepository,
@@ -41,20 +43,16 @@ namespace UI.CalendarModule.ViewModels
             OnCurrentMonthSetEventPublished(DateTime.Now);
             DaysInWeekCount = dayOfWeekRepository.GetDaysInWeek();
 
-            OnGridItemSelectedCommand = new DelegateCommand<DateCollection>(OnGridItemSelected);
+            OnGridItemSelectedCommand = new DelegateCommand(OnGridItemSelected);
         }
 
         public DateCollection SelectedDateCollection
         {
             get => _selectedDateCollection;
-            set
-            {
-                SetProperty(ref _selectedDateCollection, value);
-                OnGridItemSelected(value);
-            }
+            set => SetProperty(ref _selectedDateCollection, value);
         }
 
-        public ObservableCollection<DateCollection> DayBoxes
+        public IEnumerable<DateCollection> DayBoxes
         {
             get => _dayBoxes;
             set => SetProperty(ref _dayBoxes, value);
@@ -82,16 +80,24 @@ namespace UI.CalendarModule.ViewModels
 
         private void OnDateCollectionChangedEventReceived(IEnumerable<DateCollection> obj)
         {
+            if (!DayBoxes.Equals(obj))
+                DayBoxes = obj;
         }
 
-        private void OnGridItemSelected(DateCollection obj)
+        private void OnGridItemSelected()
         {
+            if (SelectedDateCollection == null)
+                SelectedDateCollection = _previouslySelectedDateCollection;
+
             _eventAggregator
-                .GetEvent<SetTitleForFlyoutAndOpenEvent>().Publish($"{obj.Date.ToString($"MMMM")} {obj.Date.Day}");
+                .GetEvent<SetTitleForFlyoutAndOpenEvent>()
+                .Publish($"{SelectedDateCollection.Date.ToString($"MMMM")} {SelectedDateCollection.Date.Day}");
             _eventAggregator
-                .GetEvent<SetSidePanelOpenAndSendDateCollectionEvent<DateCollection>>().Publish(obj);
+                .GetEvent<SetSidePanelOpenAndSendDateCollectionEvent<DateCollection>>().Publish(SelectedDateCollection);
             _eventAggregator
                 .GetEvent<SetFlyoutControlEvent<string>>().Publish("SelectedDayAccounts");
+
+            _previouslySelectedDateCollection = SelectedDateCollection;
         }
 
         private void OnCurrentMonthSetEventPublished(DateTime currentlySelectedDateTime)

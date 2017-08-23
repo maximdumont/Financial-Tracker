@@ -18,7 +18,12 @@
         <converters:BooleanToColorConverter x:Key="BooleanToColorConverter" />
     </UserControl.Resources>
     <ListView ItemsSource="{Binding DayBoxes}" SelectionMode="Single"
-              SelectedItem="{Binding SelectedDateCollection,Mode=TwoWay}">
+              SelectedItem="{Binding SelectedDateCollection,Mode=TwoWay}" x:Name="CalendarListView">
+        <i:Interaction.Triggers>
+            <i:EventTrigger EventName="SelectionChanged">
+                <mvvm:InvokeCommandAction Command="{Binding OnGridItemSelectedCommand}" />
+            </i:EventTrigger>
+        </i:Interaction.Triggers>
         <ListView.Template>
             <ControlTemplate>
                 <UniformGrid IsItemsHost="True" Columns="{Binding DaysInWeekCount}"

@@ -24,5 +24,6 @@ namespace UI.CalendarModule.Views
         {
             InitializeComponent();
         }
+        
     }
 }
