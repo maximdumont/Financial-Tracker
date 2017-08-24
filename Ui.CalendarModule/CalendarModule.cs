@@ -3,7 +3,7 @@ using Prism.Modularity;
 using Prism.Regions;
 using Service.Global.Constants;
 using Service.Global.Unity;
-using UI.CalendarModule.ViewModels;
+using UI.CalendarModule.LocalViewNames;
 using UI.CalendarModule.Views;
 
 namespace UI.CalendarModule
@@ -25,11 +25,14 @@ namespace UI.CalendarModule
             _regionManager.RegisterViewWithRegion(ViewNames.CalendarView,
                 () => _unityContainer.Resolve<CalendarGrid>());
 
-            _regionManager.RegisterViewWithRegion(LocalViewNames.CalendarModuleViewNames.CalendarHeaderView,
-                () => _unityContainer.Resolve<CalendarHeader>());
+            _regionManager.RegisterViewWithRegion(CalendarModuleViewNames.CalendarHeaderView,
+                () => _unityContainer.Resolve<CalendarDaysHeader>());
 
-            _regionManager.RegisterViewWithRegion(LocalViewNames.CalendarModuleViewNames.CalendarUniformGridView,
+            _regionManager.RegisterViewWithRegion(CalendarModuleViewNames.CalendarUniformGridView,
                 () => _unityContainer.Resolve<CalendarUniformGrid>());
+
+            _regionManager.RegisterViewWithRegion(ViewNames.HeaderView,
+                () => UnityConfigurationLoader.LoadedContainer.Resolve<CalendarHeader>());
         }
     }
 }

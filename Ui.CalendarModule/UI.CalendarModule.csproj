@@ -85,13 +85,18 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="ViewModels\BaseTypes\ICalendarHeaderViewModel.cs" />
     <Compile Include="ViewModels\CalendarGridViewModel.cs" />
+    <Compile Include="ViewModels\CalendarDaysHeaderViewModel.cs" />
     <Compile Include="ViewModels\CalendarHeaderViewModel.cs" />
     <Compile Include="ViewModels\CalendarUniformGridViewModel.cs" />
-    <Compile Include="ViewModels\BaseTypes\ICalendardHeaderViewModel.cs" />
+    <Compile Include="ViewModels\BaseTypes\ICalendarDaysHeaderViewModel.cs" />
     <Compile Include="ViewModels\BaseTypes\ICalendarGridViewModel.cs" />
     <Compile Include="LocalViewNames\CalendarModuleViewNames.cs" />
     <Compile Include="ViewModels\BaseTypes\ICalendarUniformGridViewModel.cs" />
+    <Compile Include="Views\CalendarDaysHeader.xaml.cs">
+      <DependentUpon>CalendarDaysHeader.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\CalendarGrid.xaml.cs">
       <DependentUpon>CalendarGrid.xaml</DependentUpon>
     </Compile>
@@ -134,13 +139,17 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Views\CalendarDaysHeader.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\CalendarGrid.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\CalendarHeader.xaml">
-      <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\CalendarUniformGrid.xaml">
       <SubType>Designer</SubType>

@@ -158,10 +158,6 @@
       <Project>{5a477e99-8d30-4f34-b2a5-925f78dcf10b}</Project>
       <Name>UI.CalendarModule</Name>
     </ProjectReference>
-    <ProjectReference Include="..\UI.HeaderModule\UI.HeaderModule.csproj">
-      <Project>{ab54428c-9c65-4cd9-bf85-10154372b75d}</Project>
-      <Name>UI.HeaderModule</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Ui.Shared\UI.Shared.csproj">
       <Project>{cfdea0d3-bee6-467b-859c-683eddee7994}</Project>
       <Name>UI.Shared</Name>

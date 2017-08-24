@@ -7,7 +7,6 @@ using Prism.Logging;
 using Prism.Modularity;
 using Prism.Unity;
 using Service.Global.Logging;
-using UI.HeaderModule.ViewModels;
 
 namespace FinTrack.Shell.Bootstrapper
 {

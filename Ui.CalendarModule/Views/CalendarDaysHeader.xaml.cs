@@ -3,11 +3,11 @@
 namespace UI.CalendarModule.Views
 {
     /// <summary>
-    /// Interaction logic for CalendarHeader.xaml
+    ///     Interaction logic for CalendarDaysHeader.xaml
     /// </summary>
-    public partial class CalendarHeader : UserControl
+    public partial class CalendarDaysHeader : UserControl
     {
-        public CalendarHeader()
+        public CalendarDaysHeader()
         {
             InitializeComponent();
         }
