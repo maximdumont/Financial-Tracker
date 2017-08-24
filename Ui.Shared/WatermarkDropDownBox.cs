@@ -33,18 +33,6 @@ namespace UI.Shared
             DependencyProperty.Register("WatermarkText", typeof(string), typeof(WatermarkDropDownBox),
                 new PropertyMetadata(default(string)));
 
-        public static readonly DependencyProperty WatermarkTextHorizontalAlignmentProperty =
-            DependencyProperty.Register("WatermarkTextHorizontalAlignment", typeof(HorizontalAlignment),
-                typeof(WatermarkDropDownBox), new PropertyMetadata(HorizontalAlignment.Center));
-
-        public static readonly DependencyProperty WatermarkTextFontSizeProperty =
-            DependencyProperty.Register("WatermarkTextFontSize", typeof(double), typeof(WatermarkDropDownBox),
-                new PropertyMetadata(15.0));
-
-        public static readonly DependencyProperty WatermarkTextVerticalAlignmentProperty =
-            DependencyProperty.Register("WatermarkTextVerticalAlignment", typeof(VerticalAlignment),
-                typeof(WatermarkDropDownBox), new PropertyMetadata(VerticalAlignment.Center));
-
         public static readonly DependencyProperty ComboBoxItemsSourceProperty =
             DependencyProperty.Register("ComboBoxItemsSource", typeof(IEnumerable<object>),
                 typeof(WatermarkDropDownBox),
@@ -54,29 +42,9 @@ namespace UI.Shared
             DependencyProperty.Register("SelectedComboBoxItem", typeof(object), typeof(WatermarkDropDownBox),
                 new PropertyMetadata(default(object)));
 
-        public static readonly DependencyProperty ComboBoxOuterMarginProperty =
-            DependencyProperty.Register("ComboBoxOuterMargin", typeof(Thickness), typeof(WatermarkDropDownBox),
-                new PropertyMetadata(new Thickness(2)));
-
-        public static readonly DependencyProperty ComboBoxHorizontalContentAlignmentProperty =
-            DependencyProperty.Register("ComboBoxHorizontalContentAlignment", typeof(HorizontalAlignment),
-                typeof(WatermarkDropDownBox), new PropertyMetadata(HorizontalAlignment.Center));
-
         public static readonly DependencyProperty OnComboBoxItemSelectedCommandProperty =
             DependencyProperty.Register("OnComboBoxItemSelectedCommand", typeof(ICommand), typeof(WatermarkDropDownBox),
                 new PropertyMetadata(default(ICommand)));
-
-        public static readonly DependencyProperty LeftSideColumnWidthProperty =
-            DependencyProperty.Register("LeftSideColumnWidth", typeof(string), typeof(WatermarkDropDownBox),
-                new PropertyMetadata(".25*"));
-
-        public static readonly DependencyProperty RightSideColumnWidthProperty =
-            DependencyProperty.Register("RightSideColumnWidth", typeof(string), typeof(WatermarkDropDownBox),
-                new PropertyMetadata("*"));
-
-        public static readonly DependencyProperty ComboBoxFontSizeProperty =
-            DependencyProperty.Register("ComboBoxFontSize", typeof(double), typeof(WatermarkDropDownBox),
-                new PropertyMetadata(20.0));
 
         static WatermarkDropDownBox()
         {
@@ -96,24 +64,6 @@ namespace UI.Shared
             set => SetValue(WatermarkTextProperty, value);
         }
 
-        public HorizontalAlignment WatermarkTextHorizontalAlignment
-        {
-            get => (HorizontalAlignment) GetValue(WatermarkTextHorizontalAlignmentProperty);
-            set => SetValue(WatermarkTextHorizontalAlignmentProperty, value);
-        }
-
-        public double WatermarkTextFontSize
-        {
-            get => (double) GetValue(WatermarkTextFontSizeProperty);
-            set => SetValue(WatermarkTextFontSizeProperty, value);
-        }
-
-        public VerticalAlignment WatermarkTextVerticalAlignment
-        {
-            get => (VerticalAlignment) GetValue(WatermarkTextVerticalAlignmentProperty);
-            set => SetValue(WatermarkTextVerticalAlignmentProperty, value);
-        }
-
         public IEnumerable<object> ComboBoxItemsSource
         {
             get => (IEnumerable<object>) GetValue(ComboBoxItemsSourceProperty);
@@ -126,40 +76,10 @@ namespace UI.Shared
             set => SetValue(SelectedComboBoxItemProperty, value);
         }
 
-        public Thickness ComboBoxOuterMargin
-        {
-            get => (Thickness) GetValue(ComboBoxOuterMarginProperty);
-            set => SetValue(ComboBoxOuterMarginProperty, value);
-        }
-
-        public HorizontalAlignment ComboBoxHorizontalContentAlignment
-        {
-            get => (HorizontalAlignment) GetValue(ComboBoxHorizontalContentAlignmentProperty);
-            set => SetValue(ComboBoxHorizontalContentAlignmentProperty, value);
-        }
-
         public ICommand OnComboBoxItemSelectedCommand
         {
             get => (ICommand) GetValue(OnComboBoxItemSelectedCommandProperty);
             set => SetValue(OnComboBoxItemSelectedCommandProperty, value);
-        }
-
-        public string LeftSideColumnWidth
-        {
-            get => (string) GetValue(LeftSideColumnWidthProperty);
-            set => SetValue(LeftSideColumnWidthProperty, value);
-        }
-
-        public string RightSideColumnWidth
-        {
-            get => (string) GetValue(RightSideColumnWidthProperty);
-            set => SetValue(RightSideColumnWidthProperty, value);
-        }
-
-        public double ComboBoxFontSize
-        {
-            get => (double) GetValue(ComboBoxFontSizeProperty);
-            set => SetValue(ComboBoxFontSizeProperty, value);
         }
     }
 }

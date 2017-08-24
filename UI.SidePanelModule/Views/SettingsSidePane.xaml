@@ -16,27 +16,20 @@
     <StackPanel Orientation="Vertical">
         <GroupBox Header="Look And Feel">
             <StackPanel Orientation="Vertical">
-                <shared:WatermarkDropDownBox WatermarkText="Theme" ComboBoxItemsSource="{Binding ThemeChoices}"
-                                             SelectedComboBoxItem="{Binding SelectedThemeChoice,Mode=TwoWay}"
-                                             OnComboBoxItemSelectedCommand="{Binding ChangeThemeCommand}" />
-
                 <shared:WatermarkTextBlockItemsControl WatermarkText="Theme">
-                    <ComboBox ItemsSource="{Binding ThemeChoices}" SelectedItem="{Binding SelectedThemeChoice,Mode=TwoWay}"/>
+                    <shared:CommandBoundComboBox SelectionChangedCommand="{Binding ChangeThemeCommand}"
+                                                 ItemsSource="{Binding ThemeChoices}"
+                                                 SelectedItem="{Binding SelectedThemeChoice,Mode=TwoWay}" />
                 </shared:WatermarkTextBlockItemsControl>
             </StackPanel>
         </GroupBox>
         <GroupBox Header="File Imports">
-            <Grid Margin="5">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width=".25*" />
-                    <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
-                <TextBlock Text="Import" HorizontalAlignment="Center" FontSize="15" Margin="5 0 5 0"
-                           VerticalAlignment="Center" />
-                <Button Content="{iconPacks:PackIconMaterial FileImport}" HorizontalContentAlignment="Center"
-                        FontSize="20"
-                        Grid.Column="1" Margin="5 0 5 0" />
-            </Grid>
+            <StackPanel Orientation="Vertical">
+                <shared:WatermarkTextBlockItemsControl WatermarkText="Import">
+                    <Button Content="{iconPacks:PackIconMaterial FileImport}" HorizontalContentAlignment="Center"
+                            FontSize="20" Margin="5 0 5 0" />
+                </shared:WatermarkTextBlockItemsControl>
+            </StackPanel>
         </GroupBox>
     </StackPanel>
 </UserControl>

@@ -1,5 +1,6 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 
 namespace UI.Shared
 {
@@ -19,24 +20,24 @@ namespace UI.Shared
     ///     "Add Reference"->"Projects"->[Browse to and select this project]
     ///     Step 2)
     ///     Go ahead and use your control in the XAML file.
-    ///     <MyNamespace:WatermarkTextBlockItemsControl />
+    ///     <MyNamespace:CommandBoundComboBox />
     /// </summary>
-    public class WatermarkTextBlockItemsControl : ItemsControl
+    public class CommandBoundComboBox : ComboBox
     {
-        public static readonly DependencyProperty WatermarkTextProperty =
-            DependencyProperty.Register("WatermarkText", typeof(string), typeof(WatermarkTextBlockItemsControl),
-                new PropertyMetadata(default(string)));
+        public static readonly DependencyProperty SelectionChangedCommandProperty = DependencyProperty.Register(
+            "SelectionChangedCommand", typeof(ICommand), typeof(CommandBoundComboBox),
+            new PropertyMetadata(default(ICommand)));
 
-        static WatermarkTextBlockItemsControl()
+        static CommandBoundComboBox()
         {
-            DefaultStyleKeyProperty.OverrideMetadata(typeof(WatermarkTextBlockItemsControl),
-                new FrameworkPropertyMetadata(typeof(WatermarkTextBlockItemsControl)));
+            DefaultStyleKeyProperty.OverrideMetadata(typeof(CommandBoundComboBox),
+                new FrameworkPropertyMetadata(typeof(CommandBoundComboBox)));
         }
 
-        public string WatermarkText
+        public ICommand SelectionChangedCommand
         {
-            get => (string) GetValue(WatermarkTextProperty);
-            set => SetValue(WatermarkTextProperty, value);
+            get => (ICommand) GetValue(SelectionChangedCommandProperty);
+            set => SetValue(SelectionChangedCommandProperty, value);
         }
     }
 }

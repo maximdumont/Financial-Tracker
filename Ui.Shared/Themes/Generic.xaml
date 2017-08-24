@@ -6,6 +6,18 @@
     xmlns:shared="clr-namespace:UI.Shared"
     xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
     xmlns:converters="clr-namespace:Service.Global.Converters;assembly=Service.Global">
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Fonts.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Colors.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/Blue.xaml" />
+        <ResourceDictionary
+            Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/BaseLight.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Fonts.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.Buttons.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.ComboBox.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/Blue.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/BaseLight.xaml" />
+    </ResourceDictionary.MergedDictionaries>
     <converters:BooleanToColorConverter x:Key="BooleanToColorConverter" />
     <Style TargetType="{x:Type TextBlock}" x:Key="HeaderTextBlockStyle">
         <Setter Property="VerticalAlignment" Value="Center" />
@@ -22,6 +34,22 @@
         <Setter Property="Margin" Value="1 0 0 1" />
         <Setter Property="VerticalAlignment" Value="Center" />
     </Style>
+
+    <Style TargetType="{x:Type TextBlock}" x:Key="WatermarkTextBlockStyle">
+        <Setter Property="HorizontalAlignment" Value="Center" />
+        <Setter Property="Margin" Value="2" />
+        <Setter Property="FontSize" Value="15" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+    </Style>
+
+    <Style TargetType="{x:Type ComboBox}" x:Key="DefaultComboBoxStyle" BasedOn="{StaticResource MetroComboBox}">
+        <Setter Property="Margin" Value="5 0 5 0" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+        <Setter Property="HorizontalAlignment" Value="Stretch" />
+        <Setter Property="FontSize" Value="20" />
+    </Style>
+
     <Style TargetType="{x:Type local:IconButton}">
         <Setter Property="Template">
             <Setter.Value>
@@ -142,7 +170,6 @@
             </Setter.Value>
         </Setter>
     </Style>
-
     <Style TargetType="{x:Type shared:WatermarkDropDownBox}">
         <Setter Property="Template">
             <Setter.Value>
@@ -152,21 +179,15 @@
                             BorderThickness="{TemplateBinding BorderThickness}">
                         <Grid Margin="{Binding BorderMargin,RelativeSource={RelativeSource TemplatedParent}}">
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition
-                                    Width="{Binding LeftSideColumnWidth,RelativeSource={RelativeSource TemplatedParent}}" />
-                                <ColumnDefinition
-                                    Width="{Binding RightSideColumnWidth,RelativeSource={RelativeSource TemplatedParent}}" />
+                                <ColumnDefinition Width=".25*" />
+                                <ColumnDefinition Width="*" />
                             </Grid.ColumnDefinitions>
                             <TextBlock Text="{Binding WatermarkText,RelativeSource={RelativeSource TemplatedParent}}"
-                                       HorizontalAlignment="{Binding WatermarkTextHorizontalAlignment,RelativeSource={RelativeSource TemplatedParent}}"
-                                       FontSize="{Binding WatermarkTextFontSize,RelativeSource={RelativeSource TemplatedParent}}"
-                                       VerticalAlignment="{Binding WatermarkTextVerticalAlignment,RelativeSource={RelativeSource TemplatedParent}}" />
+                                       Style="{StaticResource WatermarkTextBlockStyle}" />
                             <ComboBox
                                 ItemsSource="{Binding ComboBoxItemsSource,RelativeSource={RelativeSource TemplatedParent}}"
                                 SelectedItem="{Binding SelectedComboBoxItem,Mode=TwoWay,RelativeSource={RelativeSource TemplatedParent}}"
-                                Margin="{Binding ComboBoxOuterMargin,RelativeSource={RelativeSource TemplatedParent}}"
-                                FontSize="{Binding ComboBoxFontSize,RelativeSource={RelativeSource TemplatedParent}}"
-                                HorizontalContentAlignment="{Binding ComboBoxHorizontalContentAlignment,RelativeSource={RelativeSource TemplatedParent}}"
+                                Style="{StaticResource DefaultComboBoxStyle}"
                                 Grid.Column="1">
                                 <i:Interaction.Triggers>
                                     <i:EventTrigger EventName="SelectionChanged">
@@ -181,7 +202,6 @@
             </Setter.Value>
         </Setter>
     </Style>
-
     <Style TargetType="{x:Type shared:WatermarkTextBlockItemsControl}">
         <Setter Property="Template">
             <Setter.Value>
@@ -191,15 +211,36 @@
                             BorderThickness="{TemplateBinding BorderThickness}">
                         <Grid>
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width=".25*" />
                                 <ColumnDefinition Width="*" />
                             </Grid.ColumnDefinitions>
                             <TextBlock Text="{Binding WatermarkText,RelativeSource={RelativeSource TemplatedParent}}"
-                                       HorizontalAlignment="{Binding WatermarkTextHorizontalAlignment,RelativeSource={RelativeSource TemplatedParent}}"
-                                       FontSize="{Binding WatermarkTextFontSize,RelativeSource={RelativeSource TemplatedParent}}"
-                                       VerticalAlignment="{Binding WatermarkTextVerticalAlignment,RelativeSource={RelativeSource TemplatedParent}}" />
+                                       Style="{StaticResource WatermarkTextBlockStyle}" />
                             <ItemsPresenter Grid.Column="1" />
                         </Grid>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style TargetType="{x:Type shared:CommandBoundComboBox}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type shared:CommandBoundComboBox}">
+                    <Border Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}">
+                        <ComboBox
+                            ItemsSource="{Binding ItemsSource,RelativeSource={RelativeSource TemplatedParent}}"
+                            Style="{StaticResource DefaultComboBoxStyle}"
+                            SelectedItem="{Binding SelectedItem,RelativeSource={RelativeSource TemplatedParent}}">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="SelectionChanged">
+                                    <i:InvokeCommandAction
+                                        Command="{Binding SelectionChangedCommand,RelativeSource={RelativeSource TemplatedParent}}" />
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </ComboBox>
                     </Border>
                 </ControlTemplate>
             </Setter.Value>
