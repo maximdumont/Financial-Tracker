@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Windows.Input;
 using Prism.Commands;
-using Prism.Events;
 using Prism.Mvvm;
 using Service.Global.Theming;
 using UI.SidePanelModule.ViewModels.BaseTypes;
@@ -11,23 +9,15 @@ namespace UI.SidePanelModule.ViewModels
 {
     public class SettingsSidePaneViewModel : BindableBase, ISettingsSidePaneViewModel
     {
-        private readonly IUiThemeManager _themeManager;
-        private IEnumerable<string> _themeChoices;
-        private string _selectedThemeChoice;
-        private double _maximumDailyAllowance;
         private ICommand _changeThemeCommand;
+        private double _maximumDailyAllowance;
+        private string _selectedThemeChoice;
+        private IEnumerable<string> _themeChoices;
 
         public SettingsSidePaneViewModel(IUiThemeManager themeManager)
         {
-            _themeManager = themeManager;
             ThemeChoices = themeManager.ThemeChoices;
-            ChangeThemeCommand = new DelegateCommand<string>(OnChangeThemeCommandClicked);
-        }
-
-        private void OnChangeThemeCommandClicked(string newTheme)
-        {
-            _themeManager.ToggleTo(newTheme);
-            SelectedThemeChoice = newTheme;
+            ChangeThemeCommand = new DelegateCommand(() => themeManager.ToggleTo(SelectedThemeChoice));
         }
 
         public ICommand ChangeThemeCommand

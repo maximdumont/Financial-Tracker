@@ -135,6 +135,10 @@
       <Project>{7851C79A-CD7D-458A-981C-E178F4EADAEC}</Project>
       <Name>Service.Global</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Ui.Shared\UI.Shared.csproj">
+      <Project>{CFDEA0D3-BEE6-467B-859C-683EDDEE7994}</Project>
+      <Name>UI.Shared</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Page Include="Views\AboutSidePane.xaml">

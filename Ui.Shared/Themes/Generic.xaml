@@ -4,8 +4,8 @@
     xmlns:local="clr-namespace:Ui.Shared"
     xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
     xmlns:shared="clr-namespace:UI.Shared"
-    xmlns:converters="clr-namespace:Service.Global.Converters;assembly=Service.Global"
-    xmlns:models="clr-namespace:Service.Global.Models;assembly=Service.Global">
+    xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+    xmlns:converters="clr-namespace:Service.Global.Converters;assembly=Service.Global">
     <converters:BooleanToColorConverter x:Key="BooleanToColorConverter" />
     <Style TargetType="{x:Type TextBlock}" x:Key="HeaderTextBlockStyle">
         <Setter Property="VerticalAlignment" Value="Center" />
@@ -137,6 +137,69 @@
                             BorderThickness="{TemplateBinding BorderThickness}">
                         <Grid Margin="{Binding GridMargin, RelativeSource={RelativeSource TemplatedParent}}"
                               VerticalAlignment="{Binding GridVerticalAlignment, RelativeSource={RelativeSource TemplatedParent}}" />
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="{x:Type shared:WatermarkDropDownBox}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type shared:WatermarkDropDownBox}">
+                    <Border Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}">
+                        <Grid Margin="{Binding BorderMargin,RelativeSource={RelativeSource TemplatedParent}}">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition
+                                    Width="{Binding LeftSideColumnWidth,RelativeSource={RelativeSource TemplatedParent}}" />
+                                <ColumnDefinition
+                                    Width="{Binding RightSideColumnWidth,RelativeSource={RelativeSource TemplatedParent}}" />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="{Binding WatermarkText,RelativeSource={RelativeSource TemplatedParent}}"
+                                       HorizontalAlignment="{Binding WatermarkTextHorizontalAlignment,RelativeSource={RelativeSource TemplatedParent}}"
+                                       FontSize="{Binding WatermarkTextFontSize,RelativeSource={RelativeSource TemplatedParent}}"
+                                       VerticalAlignment="{Binding WatermarkTextVerticalAlignment,RelativeSource={RelativeSource TemplatedParent}}" />
+                            <ComboBox
+                                ItemsSource="{Binding ComboBoxItemsSource,RelativeSource={RelativeSource TemplatedParent}}"
+                                SelectedItem="{Binding SelectedComboBoxItem,Mode=TwoWay,RelativeSource={RelativeSource TemplatedParent}}"
+                                Margin="{Binding ComboBoxOuterMargin,RelativeSource={RelativeSource TemplatedParent}}"
+                                FontSize="{Binding ComboBoxFontSize,RelativeSource={RelativeSource TemplatedParent}}"
+                                HorizontalContentAlignment="{Binding ComboBoxHorizontalContentAlignment,RelativeSource={RelativeSource TemplatedParent}}"
+                                Grid.Column="1">
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="SelectionChanged">
+                                        <i:InvokeCommandAction
+                                            Command="{Binding OnComboBoxItemSelectedCommand,RelativeSource={RelativeSource TemplatedParent}}" />
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                            </ComboBox>
+                        </Grid>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="{x:Type shared:WatermarkTextBlockItemsControl}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type shared:WatermarkTextBlockItemsControl}">
+                    <Border Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="{Binding WatermarkText,RelativeSource={RelativeSource TemplatedParent}}"
+                                       HorizontalAlignment="{Binding WatermarkTextHorizontalAlignment,RelativeSource={RelativeSource TemplatedParent}}"
+                                       FontSize="{Binding WatermarkTextFontSize,RelativeSource={RelativeSource TemplatedParent}}"
+                                       VerticalAlignment="{Binding WatermarkTextVerticalAlignment,RelativeSource={RelativeSource TemplatedParent}}" />
+                            <ItemsPresenter Grid.Column="1" />
+                        </Grid>
                     </Border>
                 </ControlTemplate>
             </Setter.Value>
